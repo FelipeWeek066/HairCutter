@@ -13,14 +13,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Category implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -28,9 +31,12 @@ public class Category implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	@Pattern(regexp = "^[a-zA-Z ]+$", message = "apenas letras e espaços")
+	@NonNull
+	@Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]*$", message = "apenas letras e espaços")
 	private String name;
 	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private List<HairJob> hairJobs = new ArrayList<>();
+	
+
 }

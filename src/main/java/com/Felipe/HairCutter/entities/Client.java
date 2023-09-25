@@ -11,29 +11,35 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
 public class Client implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Pattern(regexp = "^[a-zA-Z ]+$", message = "apenas letras e espaços")
+	@NonNull
+	@NotNull
+	@Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]*$", message = "apenas letras e espaços")
 	private String name;
-	@Pattern(regexp = "^(\\+?[0-9]{2,3})?[0-9]{2,5}-[0-9]{4}$", message = "formato invalido")
+	@NonNull
+	@Pattern(regexp = "^[0-9()+\\s]*$", message = "formato invalido")
 	private String phone;
+	@NonNull
+	@NotNull
 	private LocalDate EnterDate;
 	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-	
 	private List<HairJobOrder> orders = new ArrayList<>();
 }

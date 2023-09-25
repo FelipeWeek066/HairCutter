@@ -11,15 +11,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Data
+@RequiredArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Barber implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -27,8 +29,12 @@ public class Barber implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
+	@NonNull
+	@Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]*$", message = "apenas letras e espaços")
 	private String name;
 	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "barber", fetch = FetchType.LAZY)
 	private List<HairJobOrder> orders = new ArrayList<>();
+	
+
 }
