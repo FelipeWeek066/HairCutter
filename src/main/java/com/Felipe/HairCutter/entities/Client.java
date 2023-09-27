@@ -15,10 +15,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +30,7 @@ public class Client implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	@NonNull
 	@NotNull
@@ -41,5 +44,6 @@ public class Client implements Serializable{
 	private LocalDate EnterDate;
 	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	@ToString.Exclude
 	private List<HairJobOrder> orders = new ArrayList<>();
 }
