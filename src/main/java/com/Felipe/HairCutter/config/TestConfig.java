@@ -13,6 +13,16 @@ import com.Felipe.HairCutter.entities.Category;
 import com.Felipe.HairCutter.entities.Client;
 import com.Felipe.HairCutter.entities.HairJob;
 import com.Felipe.HairCutter.entities.HairJobOrder;
+import com.Felipe.HairCutter.entities.DTOs.BarberDTO;
+import com.Felipe.HairCutter.entities.DTOs.CategoryDTO;
+import com.Felipe.HairCutter.entities.DTOs.ClientDTO;
+import com.Felipe.HairCutter.entities.DTOs.HairJobDTO;
+import com.Felipe.HairCutter.entities.DTOs.HairJobOrderDTO;
+import com.Felipe.HairCutter.mappers.BarberMapper;
+import com.Felipe.HairCutter.mappers.CategoryMapper;
+import com.Felipe.HairCutter.mappers.ClientMapper;
+import com.Felipe.HairCutter.mappers.HairJobMapper;
+import com.Felipe.HairCutter.mappers.HairJobOrderMapper;
 import com.Felipe.HairCutter.services.BarberService;
 import com.Felipe.HairCutter.services.CategoryService;
 import com.Felipe.HairCutter.services.ClientService;
@@ -43,6 +53,7 @@ public class TestConfig implements CommandLineRunner{
 	private HairJobService HJService;
 	@Autowired
 	private HairJobOrderService hJOService;
+	
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -93,12 +104,33 @@ public class TestConfig implements CommandLineRunner{
 		hJOService.insert(o2);
 		
 		
-		System.out.println(barberService.findById(b1.getId()));
+		/*System.out.println(barberService.findById(b1.getId()));
 		System.out.println(clientService.findById(c1.getId()));
 		System.out.println(categoryService.findById(ct1.getId()));
 		System.out.println(HJService.findById(hJ1.getId()));
 		System.out.println(hJOService.findById(b1.getId()));
-		System.out.println(hJOService.findById(o1.getId()));
+		System.out.println(hJOService.findById(o1.getId()));*/
+		
+		BarberDTO barber = BarberMapper.INSTANCE.barberToBarberDTO(b1);
+		System.out.println(barber);
+		System.out.println(BarberMapper.INSTANCE.barberDTOToBarber(barber));
+		
+		CategoryDTO category = CategoryMapper.INSTANCE.categoryToCategoryDTO(ct1);
+		System.out.println(category);
+		System.out.println(CategoryMapper.INSTANCE.categoryDTOToCategory(category));
+		
+		ClientDTO client = ClientMapper.INSTANCE.clientToClientDTO(c1);
+		System.out.println(client);
+		System.out.println(ClientMapper.INSTANCE.clientDTOToClient(client));
+		
+		HairJobDTO HJ = HairJobMapper.INSTANCE.hairJobToHairJobDTO(hJ1);
+		System.out.println(HJ);
+		System.out.println(HairJobMapper.INSTANCE.hairJobDTOToHairJob(HJ));
+		
+		HairJobOrderDTO hjo = HairJobOrderMapper.INSTANCE.hairJobOrderToHairJobOrderDTO(o1);
+		System.out.println(hjo);
+		System.out.println(HairJobOrderMapper.INSTANCE.hairJobOrderDTOToHairJobOrder(hjo));
+		
 	}
 
 }

@@ -48,7 +48,7 @@ public class HairJobOrder implements Serializable{
 	private Instant instant;
 	@Setter(value = AccessLevel.NONE)
 	@ManyToMany
-	@JoinTable(name = "Order_HairJob", 
+	@JoinTable(name = "Order&Jobs", 
 	joinColumns = {@JoinColumn(name = "hairJob_id")},
 	inverseJoinColumns = {@JoinColumn(name = "hairJobOrder_id")}
 	)

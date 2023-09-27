@@ -1,8 +1,8 @@
 package com.Felipe.HairCutter.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,7 +40,7 @@ public class Category implements Serializable{
 	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	@ToString.Exclude
-	private List<HairJob> hairJobs = new ArrayList<>();
+	private Set<HairJob> hairJobs = new HashSet<>();
 	
 
 }
