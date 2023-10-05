@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,13 +40,14 @@ public class HairJobOrder implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
-	@NotNull
 	@NonNull
-	@JoinColumn(name = "client_id")
+	@NotNull
 	@ManyToOne
+	@JoinColumn(name = "client_id")
 	private Client client;
 	@NonNull
 	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm'Z'")
 	private Instant instant;
 	@Setter(value = AccessLevel.NONE)
 	@ManyToMany
@@ -55,4 +58,9 @@ public class HairJobOrder implements Serializable{
 	@ToString.Exclude
 	private Set<HairJob> jobs = new HashSet<>();
 	
+	public Double fullPrice() {
+		return jobs.stream()
+	               .mapToDouble(HairJob::getPrice) 
+	               .sum();
+	}
 }

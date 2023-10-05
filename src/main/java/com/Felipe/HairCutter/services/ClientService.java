@@ -1,5 +1,6 @@
 package com.Felipe.HairCutter.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class ClientService {
 	}
 	
 	public Client insert(@Valid Client client) {
+		client.setEnterDate(LocalDate.now());
 		return repository.save(client);
 	}
 	

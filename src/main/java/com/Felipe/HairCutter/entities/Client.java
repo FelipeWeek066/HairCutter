@@ -2,8 +2,8 @@ package com.Felipe.HairCutter.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -41,9 +41,9 @@ public class Client implements Serializable{
 	private String phone;
 	@NonNull
 	@NotNull
-	private LocalDate EnterDate;
+	private LocalDate enterDate;
 	@Setter(value = AccessLevel.NONE)
-	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	@ToString.Exclude
-	private List<HairJobOrder> orders = new ArrayList<>();
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	private Set<HairJobOrder> orders = new HashSet<>();
 }

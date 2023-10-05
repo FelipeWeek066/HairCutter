@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="th=" http://thymeleaf.org"">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Administração de Barbearia</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+	<header>
+		<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Admin</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+					<div class="navbar-nav">
+						<a class="nav-link active" aria-current="page" href="#">Elementos</a>
+						<a class="nav-link" href="#">Horarios</a>
+						<a class="nav-link" href="#">Contabilidade</a>
+						<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-3 col-lg-2 row-cols-2 bg-dark" style="
+    height: 100%;
+    position: fixed;
+    padding: 15px;
+    text-align: left;">
+				<a type="button" href="/admin/barbers" class="btn btn-dark">Barbeiro</a>
+				<a type="button" href="/admin/clients" class="btn btn-dark">Cliente</a>
+				<a type="button" href="/admin/jobs" class="btn btn-dark">Serviços</a>
+				<a type="button" href="/admin/categories" class="btn btn-dark">Categorias</a>
+				<a type="button" href="/admin/orders" class="btn btn-dark">pedidos</a>
+			</div>
+			<main>
+				<section id="barbers-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
+					<div class="conteiner mx-auto" style="width: 80%;">
+						<table class="table table-hover table-striped" style="margin-top: 30px;">
+							<thead class="table-light">
+								<tr>
+									<th scope="col" class="col-2">#</th>
+									<th scope="col" class="col-7">nome</th>
+									<th scope="col" class="col-1"></th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<tr th:each="barber : ${barbers}">
+									<th scope="row"><span th:text="${barber.id}"></span></th>
+									<td><span th:text="${barber.name}"></span></td>
+									<td class="d-grid gap-2 d-md-flex justify-content-md">
+										<button type="button" class="btn btn-light"
+											style=" --bs-btn-font-size: .85rem;">Editar</button>
+										<button type="button" class="btn btn-danger"
+											style=" --bs-btn-font-size: .85rem">Deletar</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section id="clients-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
+					<div class="conteiner mx-auto" style="width: 80%;">
+						<table class="table table-hover table-striped" style="margin-top: 30px;">
+							<thead class="table-light">
+								<tr>
+									<th scope="col" class="col-1">#</th>
+									<th scope="col" class="col-4">nome</th>
+									<th scope="col" class="col-4">Celular</th>
+									<th scope="col" class="col-1"></th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<tr th:each="client : ${clients}">
+									<th scope="row"><span th:text="${client.id}"></span></th>
+									<td><span th:text="${client.name}"></span></td>
+									<td><span th:text="${client.phone}"></span></td>
+									<td class="d-grid gap-2 d-md-flex justify-content-md">
+										<button type="button" class="btn btn-light"
+											style=" --bs-btn-font-size: .85rem;">Editar</button>
+										<button type="button" class="btn btn-danger"
+											style=" --bs-btn-font-size: .85rem">Deletar</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section id="jobs-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
+					<div class="conteiner mx-auto" style="width: 80%;">
+						<table class="table table-hover table-striped" style="margin-top: 30px;">
+							<thead class="table-light">
+								<tr>
+									<th scope="col" class="col-1">#</th>
+									<th scope="col" class="col-3">nome</th>
+									<th scope="col " class="col-3">categoria</th>
+									<th scope="col " class="col-2">preço</th>
+									<th scope="col" class="col-1"></th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<tr th:each="job : ${jobs}">
+									<th scope="row"><span th:text="${job.id}"></span></th>
+									<td><span th:text="${job.name}"></span></td>
+									<td><span th:text="${job.category.name}"></span></td>
+									<td><span th:text="${job.price}"></span></td>
+									<td class="d-grid gap-2 d-md-flex justify-content-md">
+										<button type="button" class="btn btn-light"
+											style=" --bs-btn-font-size: .85rem;">Editar</button>
+										<button type="button" class="btn btn-danger"
+											style=" --bs-btn-font-size: .85rem">Deletar</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section id="categories-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
+					<div class="conteiner mx-auto" style="width: 80%;">
+						<table class="table table-hover table-striped" style="margin-top: 30px;">
+							<thead class="table-light">
+								<tr>
+									<th scope="col" class="col-2">#</th>
+									<th scope="col" class="col-7">nome</th>
+									<th scope="col" class="col-1"></th>
+								</tr>
+
+							</thead>
+							<tbody>
+								<tr th:each="category : ${categories}">
+									<th scope="row"><span th:text="${category.id}"></span></th>
+									<td><span th:text="${category.name}"></span></td>
+									<td class="d-grid gap-2 d-md-flex justify-content-md">
+										<button type="button" class="btn btn-light"
+											style=" --bs-btn-font-size: .85rem;">Editar</button>
+										<button type="button" class="btn btn-danger"
+											style=" --bs-btn-font-size: .85rem">Deletar</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</section>
+
+				<section id="orders-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
+					<div class="conteiner mx-auto" style="width: 80%;">
+						aqui tem a tela personalizada de pedidos
+					</div>
+				</section>
+			</main>
+		</div>
+	</div>
+
+	<script>function chooseSec(id) {
+			const section = document.querySelectorAll('main section');
+			section.forEach(secao => secao.style.display = 'none');
+
+			const selectedSection = document.getElementById(id);
+			if (selectedSection) {
+				selectedSection.style.display = 'block';
+			}
+		}
+
+		window.addEventListener('load', function () {
+			var path = window.location.pathname;
+			if (path.includes('admin/barbers')) {
+				chooseSec('barbers-tbl');
+			} else if (path.includes('admin/clients')) {
+				chooseSec('clients-tbl');
+			} else if (path.includes('admin/jobs')) {
+				chooseSec('jobs-tbl');
+			} else if (path.includes('admin/categories')) {
+				chooseSec('categories-tbl');
+			} else if (path.includes('admin/orders')) {
+				chooseSec('orders-tbl');
+			}
+		});
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>
