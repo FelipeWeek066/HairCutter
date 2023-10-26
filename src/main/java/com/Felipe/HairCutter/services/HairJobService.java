@@ -39,8 +39,7 @@ public class HairJobService {
 	}
 	
 	public HairJob update(Long id, @Valid HairJob obj) {
-		findById(id);
-		HairJob hairJob = repository.getReferenceById(id);
+		HairJob hairJob = findById(id);
 		updateData(hairJob, obj);
 		return repository.save(hairJob);
 	}

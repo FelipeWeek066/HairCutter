@@ -34,8 +34,7 @@ public class HairJobOrderService {
 	}
 	
 	public HairJobOrder update(Long id, @Valid HairJobOrder obj) {
-		findById(id);
-		HairJobOrder hJO = repository.getReferenceById(id);
+		HairJobOrder hJO = findById(id);
 		updateData(hJO, obj);
 		return repository.save(hJO);
 	}

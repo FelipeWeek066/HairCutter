@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -29,6 +30,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@Table(name = "orders")
 public class HairJobOrder implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -53,7 +55,7 @@ public class HairJobOrder implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "Order&Jobs", 
 	joinColumns = {@JoinColumn(name = "hairJob_id")},
-	inverseJoinColumns = {@JoinColumn(name = "hairJobOrder_id")}
+	inverseJoinColumns = {@JoinColumn(name = "orders_id")}
 	)
 	@ToString.Exclude
 	private Set<HairJob> jobs = new HashSet<>();

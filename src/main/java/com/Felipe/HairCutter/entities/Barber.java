@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -35,11 +38,19 @@ public class Barber implements Serializable{
 	@NonNull
 	@Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]*$", message = "apenas letras e espaços")
 	private String name;
-	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
+	@Setter(value = AccessLevel.NONE)
 	@OneToMany(mappedBy = "barber", fetch = FetchType.LAZY)
 	//if we use List here, a circular Error appear, this doesn't happen with Set or with a @JsonIgnore.
 	private Set<HairJobOrder> orders = new HashSet<>();
+	@Setter(value = AccessLevel.NONE)
+	@ToString.Exclude
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JoinTable(name = "Barber&History", 
+			joinColumns = {@JoinColumn(name = "barber_id")},
+			inverseJoinColumns = {@JoinColumn(name = "history_id")}
+			)
+	private Set<History> history = new HashSet<>();
 	
 
 }

@@ -14,21 +14,44 @@
 <body>
 
 	<header>
-		<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+		<nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">Admin</a>
+				<a class="navbar-brand" href="#">Navbar</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-					data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
-					aria-label="Toggle navigation">
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-					<div class="navbar-nav">
-						<a class="nav-link active" aria-current="page" href="#">Elementos</a>
-						<a class="nav-link" href="#">Horarios</a>
-						<a class="nav-link" href="#">Contabilidade</a>
-						<a class="nav-link disabled" aria-disabled="true">Disabled</a>
-					</div>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link active" aria-current="page" href="#">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Link</a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								Dropdown
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Action</a></li>
+								<li><a class="dropdown-item" href="#">Another action</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">Something else here</a></li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link disabled" aria-disabled="true">Disabled</a>
+						</li>
+					</ul>
+					<form class="d-flex" role="search">
+						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+						<button class="btn btn-outline-success" type="submit">Search</button>
+					</form>
 				</div>
 			</div>
 		</nav>
@@ -39,23 +62,24 @@
 			<div class="col-3 col-lg-2 row-cols-2 bg-dark" style="
     height: 100%;
     position: fixed;
-    padding: 15px;
-    text-align: left;">
-				<a type="button" href="/admin/barbers" class="btn btn-dark">Barbeiro</a>
-				<a type="button" href="/admin/clients" class="btn btn-dark">Cliente</a>
-				<a type="button" href="/admin/jobs" class="btn btn-dark">Serviços</a>
-				<a type="button" href="/admin/categories" class="btn btn-dark">Categorias</a>
-				<a type="button" href="/admin/orders" class="btn btn-dark">pedidos</a>
+    padding: 15px 30px 15px 30px;">
+				<button type="button" onclick="chooseSec('all')" class="btn btn-dark">Todos</button>
+				<button type="button" onclick="chooseSec('barbers-tbl')" class="btn btn-dark">Barbeiro</button>
+				<button type="button" onclick="chooseSec('clients-tbl')" class="btn btn-dark">Cliente</button>
+				<button type="button" onclick="chooseSec('jobs-tbl')" class="btn btn-dark">Serviços</button>
+				<button type="button" onclick="chooseSec('categories-tbl')" class="btn btn-dark">Categorias</button>
+				<button type="button" onclick="chooseSec('orders-tbl')" class="btn btn-dark">pedidos</button>
 			</div>
-			<main>
+			<main style="margin-top: 50px;">
 				<section id="barbers-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
 					<div class="conteiner mx-auto" style="width: 80%;">
-						<table class="table table-hover table-striped" style="margin-top: 30px;">
+						<h1>Barbeiros</h1>
+						<table class="table table-hover " style="margin-top: 30px;">
 							<thead class="table-light">
 								<tr>
 									<th scope="col" class="col-2">#</th>
 									<th scope="col" class="col-7">nome</th>
-									<th scope="col" class="col-1"></th>
+									<th scope="col" class="col-1 text-center"></th>
 								</tr>
 
 							</thead>
@@ -64,13 +88,34 @@
 									<th scope="row"><span th:text="${barber.id}"></span></th>
 									<td><span th:text="${barber.name}"></span></td>
 									<td class="d-grid gap-2 d-md-flex justify-content-md">
-										<button type="button" class="btn btn-light"
-											style=" --bs-btn-font-size: .85rem;">Editar</button>
-										<button type="button" class="btn btn-danger"
-											style=" --bs-btn-font-size: .85rem">Deletar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-light">Editar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-danger">Deletar</button>
 									</td>
 								</tr>
+								<tr>
+									<th scope="row"><button type="button" class="btn btn-success me-md-2"
+											onclick="changeVisible('newBarber', 'show')">+</button>
+									</th>
+									<form id="newBarber">
 
+										<td> <input id="newBarber" type="text" class="form-control" oninput="validCamp(this, 'name')"
+												required></td>
+										<td class="d-grid gap-2 d-md-flex justify-content-md">
+											<button class="btn btn-success" style=" --bs-btn-font-size: .85rem"
+												type="submit">salvar</button>
+											<button type="button" onclick="changeVisible('newBarber', 'hide')"
+												style=" --bs-btn-font-size: .85rem"
+												class="btn btn-danger">cancelar</button>
+
+										</td>
+									</form>
+								</tr>
+
+
+
+							</tbody>
 							</tbody>
 						</table>
 					</div>
@@ -78,13 +123,15 @@
 
 				<section id="clients-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
 					<div class="conteiner mx-auto" style="width: 80%;">
-						<table class="table table-hover table-striped" style="margin-top: 30px;">
+						<h1>clientes</h1>
+						<table class="table table-hover  table-striped" style="margin-top: 30px;">
 							<thead class="table-light">
 								<tr>
 									<th scope="col" class="col-1">#</th>
 									<th scope="col" class="col-4">nome</th>
 									<th scope="col" class="col-4">Celular</th>
-									<th scope="col" class="col-1"></th>
+									<th scope="col" class="col-1 text-center"><button type="button"
+											class="btn btn-success me-md-2">+</button></th>
 								</tr>
 
 							</thead>
@@ -94,13 +141,35 @@
 									<td><span th:text="${client.name}"></span></td>
 									<td><span th:text="${client.phone}"></span></td>
 									<td class="d-grid gap-2 d-md-flex justify-content-md">
-										<button type="button" class="btn btn-light"
-											style=" --bs-btn-font-size: .85rem;">Editar</button>
-										<button type="button" class="btn btn-danger"
-											style=" --bs-btn-font-size: .85rem">Deletar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-light">Editar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-danger">Deletar</button>
 									</td>
 								</tr>
+								<tr>
+									<th scope="row"><button type="button" class="btn btn-success me-md-2"
+											onclick="changeVisible('newClient', 'show')">+</button>
+									</th>
+									<form id="newClient">
 
+										<td> <input type="text" class="form-control" oninput="validCamp(this, 'name')"
+												required>
+
+										</td>
+
+										<td><input type="tel" id="telefone" class="form-control"
+												oninput="validCamp(this, 'phone')"></td>
+										<td class="d-grid gap-2 d-md-flex justify-content-md">
+											<button class="btn btn-success" style=" --bs-btn-font-size: .85rem"
+												type="submit">salvar</button>
+											<button type="button" onclick="changeVisible('newClient', 'hide')"
+												style=" --bs-btn-font-size: .85rem"
+												class="btn btn-danger">cancelar</button>
+
+										</td>
+									</form>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -108,6 +177,7 @@
 
 				<section id="jobs-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
 					<div class="conteiner mx-auto" style="width: 80%;">
+						<h1>Serviços</h1>
 						<table class="table table-hover table-striped" style="margin-top: 30px;">
 							<thead class="table-light">
 								<tr>
@@ -115,7 +185,7 @@
 									<th scope="col" class="col-3">nome</th>
 									<th scope="col " class="col-3">categoria</th>
 									<th scope="col " class="col-2">preço</th>
-									<th scope="col" class="col-1"></th>
+									<th scope="col" class="col-1 text-center"></th>
 								</tr>
 
 							</thead>
@@ -126,13 +196,38 @@
 									<td><span th:text="${job.category.name}"></span></td>
 									<td><span th:text="${job.price}"></span></td>
 									<td class="d-grid gap-2 d-md-flex justify-content-md">
-										<button type="button" class="btn btn-light"
-											style=" --bs-btn-font-size: .85rem;">Editar</button>
-										<button type="button" class="btn btn-danger"
-											style=" --bs-btn-font-size: .85rem">Deletar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-light">Editar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-danger">Deletar</button>
 									</td>
 								</tr>
+								<tr>
+									<th scope="row"><button type="button" class="btn btn-success me-md-2"
+											onclick="changeVisible('newJob', 'show')">+</button>
+									</th>
+									<form id="newJob">
 
+										<td>
+											<input type="text" class="form-control" oninput="validCamp(this, 'name')"
+												required>
+										</td>
+
+										<td><p>falta implementar</p></td>
+										<td>
+											<input type="text" class="form-control" oninput="validCamp(this, 'price')"
+												required>
+										</td>
+										<td class="d-grid gap-2 d-md-flex justify-content-md">
+											<button class="btn btn-success" style=" --bs-btn-font-size: .85rem"
+												type="submit">salvar</button>
+											<button type="button" onclick="changeVisible('newJob', 'hide')"
+												style=" --bs-btn-font-size: .85rem"
+												class="btn btn-danger">cancelar</button>
+
+										</td>
+									</form>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -140,12 +235,14 @@
 
 				<section id="categories-tbl" class="col-9 ms-auto col-lg-10 px-md-4 ">
 					<div class="conteiner mx-auto" style="width: 80%;">
+						<h1>categorias de serviços</h1>
 						<table class="table table-hover table-striped" style="margin-top: 30px;">
 							<thead class="table-light">
 								<tr>
 									<th scope="col" class="col-2">#</th>
 									<th scope="col" class="col-7">nome</th>
-									<th scope="col" class="col-1"></th>
+									<th scope="col" class="col-1 text-center"><button type="button"
+											class="btn btn-success me-md-2">+</button></th>
 								</tr>
 
 							</thead>
@@ -154,13 +251,32 @@
 									<th scope="row"><span th:text="${category.id}"></span></th>
 									<td><span th:text="${category.name}"></span></td>
 									<td class="d-grid gap-2 d-md-flex justify-content-md">
-										<button type="button" class="btn btn-light"
-											style=" --bs-btn-font-size: .85rem;">Editar</button>
-										<button type="button" class="btn btn-danger"
-											style=" --bs-btn-font-size: .85rem">Deletar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-light">Editar</button>
+										<button type="button" style=" --bs-btn-font-size: .85rem"
+											class="btn btn-danger">Deletar</button>
 									</td>
 								</tr>
+								<tr>
+									<th scope="row"><button type="button" class="btn btn-success me-md-2"
+											onclick="changeVisible('newCategory', 'show')">+</button>
+									</th>
+									<form id="newCategory">
 
+										<td> <input type="text" class="form-control" oninput="validCamp(this, 'name')"
+												required>
+
+										</td>
+										<td class="d-grid gap-2 d-md-flex justify-content-md">
+											<button class="btn btn-success" style=" --bs-btn-font-size: .85rem"
+												type="submit">salvar</button>
+											<button type="button" onclick="changeVisible('newCategory', 'hide')"
+												style=" --bs-btn-font-size: .85rem"
+												class="btn btn-danger">cancelar</button>
+
+										</td>
+									</form>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -175,30 +291,51 @@
 		</div>
 	</div>
 
-	<script>function chooseSec(id) {
-			const section = document.querySelectorAll('main section');
-			section.forEach(secao => secao.style.display = 'none');
+	<script>
+		function changeVisible(id, state) {
 
-			const selectedSection = document.getElementById(id);
-			if (selectedSection) {
-				selectedSection.style.display = 'block';
+			var obj = document.querySelectorAll('id');
+			
+			if (state == "hide") {
+					obj.elements[i].style.display = 'none';
+			}
+			} else if (state == "show") {
+					obj.elements[i].style.display = 'block';
+			}
+			
+
+		}
+
+		function validCamp(input, type) {
+			if (type == "phone") {
+				input.value = input.value.replace(/[^\d\s()+]/g, ''); // Remove todos os caracteres não numéricos
+			}
+			if (type == "name") {
+				input.value = input.value.replace(/[^a-zA-Z\s]/g, '') // Remove caracteres não permitidos
+					.replace(/\b\w/g, l => l.toUpperCase()) // Capitaliza a primeira letra de cada palavra
+					.toLowerCase();
+			}
+			if (type == "price") {
+				input.value = input.value.replace(/[^0-9.,]/g, '');
 			}
 		}
 
-		window.addEventListener('load', function () {
-			var path = window.location.pathname;
-			if (path.includes('admin/barbers')) {
-				chooseSec('barbers-tbl');
-			} else if (path.includes('admin/clients')) {
-				chooseSec('clients-tbl');
-			} else if (path.includes('admin/jobs')) {
-				chooseSec('jobs-tbl');
-			} else if (path.includes('admin/categories')) {
-				chooseSec('categories-tbl');
-			} else if (path.includes('admin/orders')) {
-				chooseSec('orders-tbl');
+		function chooseSec(id) {
+			const section = document.querySelectorAll('main section');
+
+			if (id == 'all') {
+				secao.classList.remove('visually-hidden');
+			} else {
+				section.forEach(secao => {
+					if (secao.id == id) {
+						secao.classList.remove('visually-hidden');
+					} else {
+						secao.classList.add('visually-hidden');
+					}
+				});
 			}
-		});
+		}
+
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

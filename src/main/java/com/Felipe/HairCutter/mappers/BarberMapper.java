@@ -12,6 +12,7 @@ public interface BarberMapper {
 	BarberMapper INSTANCE = Mappers.getMapper(BarberMapper.class);
 	
 	@Mapping(target = "orders", ignore = true)
+	@Mapping(target = "history", ignore = true)
 	Barber barberDTOToBarber(BarberDTO barber);
 	
 	BarberDTO barberToBarberDTO(Barber barber);

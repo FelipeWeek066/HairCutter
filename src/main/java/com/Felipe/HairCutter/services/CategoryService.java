@@ -40,8 +40,7 @@ public class CategoryService {
 	}
 	
 	public Category update(Long id, @Valid Category obj) {
-		findById(id);
-		Category category = repository.getReferenceById(id);
+		Category category = findById(id);
 		updateData(category, obj);
 		return repository.save(category);
 	}
