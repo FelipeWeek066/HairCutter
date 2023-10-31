@@ -53,4 +53,5 @@ public class Client implements Serializable{
 			inverseJoinColumns = {@JoinColumn(name = "history_id")}
 			)
 	private Set<History> history = new HashSet<>();
+
 }

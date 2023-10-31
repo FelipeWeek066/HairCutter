@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -60,9 +62,12 @@ public class HairJobOrder implements Serializable{
 	@ToString.Exclude
 	private Set<HairJob> jobs = new HashSet<>();
 	
+	
 	public Double fullPrice() {
 		return jobs.stream()
 	               .mapToDouble(HairJob::getPrice) 
 	               .sum();
 	}
 }
+
+

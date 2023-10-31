@@ -32,6 +32,9 @@ public class HairJob implements Serializable{
 	private String name;
 	@NonNull
 	@NotNull
+	private String description;
+	@NonNull
+	@NotNull
 	@JoinColumn(name = "category_id")
 	@ManyToOne
 	private Category category;

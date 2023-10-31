@@ -40,17 +40,19 @@ public class Barber implements Serializable{
 	private String name;
 	@ToString.Exclude
 	@Setter(value = AccessLevel.NONE)
+	@EqualsAndHashCode.Exclude
 	@OneToMany(mappedBy = "barber", fetch = FetchType.LAZY)
 	//if we use List here, a circular Error appear, this doesn't happen with Set or with a @JsonIgnore.
 	private Set<HairJobOrder> orders = new HashSet<>();
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JoinTable(name = "Barber&History", 
 			joinColumns = {@JoinColumn(name = "barber_id")},
 			inverseJoinColumns = {@JoinColumn(name = "history_id")}
 			)
 	private Set<History> history = new HashSet<>();
-	
+
 
 }
