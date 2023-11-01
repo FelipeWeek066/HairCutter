@@ -61,6 +61,14 @@ public class HairJobOrder implements Serializable{
 	)
 	@ToString.Exclude
 	private Set<HairJob> jobs = new HashSet<>();
+	@Setter(value = AccessLevel.NONE)
+	@ToString.Exclude
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "order&notes", 
+			joinColumns = {@JoinColumn(name = "order_id")},
+			inverseJoinColumns = {@JoinColumn(name = "note_id")}
+		)
+	private Set<Note> notes = new HashSet<>();
 	
 	
 	public Double fullPrice() {

@@ -53,5 +53,12 @@ public class Client implements Serializable{
 			inverseJoinColumns = {@JoinColumn(name = "history_id")}
 			)
 	private Set<History> history = new HashSet<>();
-
+	@Setter(value = AccessLevel.NONE)
+	@ToString.Exclude
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "client&notes", 
+		joinColumns = {@JoinColumn(name = "client_id")},
+		inverseJoinColumns = {@JoinColumn(name = "note_id")}
+	)
+	private Set<Note> notes = new HashSet<>();
 }

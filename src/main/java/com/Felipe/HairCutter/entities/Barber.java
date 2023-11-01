@@ -53,6 +53,14 @@ public class Barber implements Serializable{
 			inverseJoinColumns = {@JoinColumn(name = "history_id")}
 			)
 	private Set<History> history = new HashSet<>();
-
+	
+	@Setter(value = AccessLevel.NONE)
+	@ToString.Exclude
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "barber&notes", 
+		joinColumns = {@JoinColumn(name = "barber_id")},
+		inverseJoinColumns = {@JoinColumn(name = "note_id")}
+	)
+	private Set<Note> notes = new HashSet<>();
 
 }

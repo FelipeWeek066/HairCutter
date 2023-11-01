@@ -13,11 +13,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +37,13 @@ public class WeekDay implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private Day dayName;
 	
-	
+	@Setter(value = AccessLevel.NONE)
+	@ToString.Exclude
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinTable(name = "day&notes", 
+			joinColumns = {@JoinColumn(name = "day_id")},
+			inverseJoinColumns = {@JoinColumn(name = "note_id")}
+		)
+	private Set<Note> notes = new HashSet<>();
 	
 }
