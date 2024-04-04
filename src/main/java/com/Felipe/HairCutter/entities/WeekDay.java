@@ -28,6 +28,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+//entity for a day of the week.
 public class WeekDay implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id

@@ -28,6 +28,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+//Entity of the employee
 public class Barber implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -62,5 +63,6 @@ public class Barber implements Serializable{
 		inverseJoinColumns = {@JoinColumn(name = "note_id")}
 	)
 	private Set<Note> notes = new HashSet<>();
-
+	
+	
 }
