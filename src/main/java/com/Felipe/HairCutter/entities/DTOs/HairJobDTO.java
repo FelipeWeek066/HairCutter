@@ -14,6 +14,7 @@ public class HairJobDTO implements Serializable{
 	
 	private Long id;
 	private String name;
+	private String description;
 	private CategoryDTO category;
 	private Double price;
 }

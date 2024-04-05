@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.Felipe.HairCutter.entities.HairJob;
 import com.Felipe.HairCutter.repositories.HairJobRepository;
 import com.Felipe.HairCutter.services.exceptions.DatabaseException;
-import com.Felipe.HairCutter.services.exceptions.ResourceNotFoundException;
+import com.Felipe.HairCutter.services.exceptions.ContentNotFoundException;
 
 import jakarta.validation.Valid;
 
@@ -23,7 +23,7 @@ public class HairJobService {
 	}
 	
 	public HairJob findById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new ContentNotFoundException(id));
 	}
 	
 	public HairJob insert(@Valid HairJob hairJob) {

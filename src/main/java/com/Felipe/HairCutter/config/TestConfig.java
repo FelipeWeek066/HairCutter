@@ -3,26 +3,23 @@ package com.Felipe.HairCutter.config;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.Felipe.HairCutter.entities.Barber;
-import com.Felipe.HairCutter.entities.BarberDay;
 import com.Felipe.HairCutter.entities.Category;
 import com.Felipe.HairCutter.entities.Client;
 import com.Felipe.HairCutter.entities.HairJob;
 import com.Felipe.HairCutter.entities.HairJobOrder;
 import com.Felipe.HairCutter.entities.Note;
-import com.Felipe.HairCutter.entities.WeekDay;
-import com.Felipe.HairCutter.enums.Availability;
-import com.Felipe.HairCutter.enums.Day;
-import com.Felipe.HairCutter.repositories.BarberDayRepository;
 import com.Felipe.HairCutter.repositories.BarberRepository;
+import com.Felipe.HairCutter.repositories.CategoryRepository;
+import com.Felipe.HairCutter.repositories.ClientRepository;
+import com.Felipe.HairCutter.repositories.HairJobOrderRepository;
+import com.Felipe.HairCutter.repositories.HairJobRepository;
 import com.Felipe.HairCutter.repositories.NoteRepository;
-import com.Felipe.HairCutter.repositories.WeekDayRepository;
 import com.Felipe.HairCutter.services.BarberService;
 import com.Felipe.HairCutter.services.CategoryService;
 import com.Felipe.HairCutter.services.ClientService;
@@ -32,24 +29,28 @@ import com.Felipe.HairCutter.services.HairJobService;
 @Configuration
 public class TestConfig implements CommandLineRunner {
 
-	/*
-	 * @Autowired private BarberRepository barberRepository;
-	 * 
-	 * @Autowired private ClientRepository clientRepository;
-	 * 
-	 * @Autowired private CategoryRepository categoryRepository;
-	 * 
-	 * @Autowired private HairJobRepository HJRepository;
-	 * 
-	 * @Autowired private HairJobOrderRepository hJORepository;
-	 */
-
-	@Autowired
-	private BarberService barberService;
 	@Autowired
 	private BarberRepository barberRepository;
+
 	@Autowired
-	private BarberDayRepository barberDayRepository;
+	private ClientRepository clientRepository;
+
+	@Autowired
+	private CategoryRepository categoryRepository;
+
+	@Autowired
+	private NoteRepository noteRepository;
+	
+	@Autowired
+	private HairJobRepository HJRepository;
+
+	@Autowired
+	private HairJobOrderRepository hJORepository;
+
+	
+	
+	@Autowired
+	private BarberService barberService;
 	@Autowired
 	private ClientService clientService;
 	@Autowired
@@ -58,15 +59,9 @@ public class TestConfig implements CommandLineRunner {
 	private HairJobService HJService;
 	@Autowired
 	private HairJobOrderService hJOService;
-	@Autowired
-	private WeekDayRepository WDService;
-	@Autowired
-	private NoteRepository noteRepository;
+
 	@Override
 	public void run(String... args) throws Exception {
-		for(int i = 0; i < 7; i++) {
-			WDService.save(new WeekDay(Day.values()[i]));
-		}
 		
 		// Database Seeding
 		Barber b1 = new Barber("Hyago");
@@ -74,16 +69,13 @@ public class TestConfig implements CommandLineRunner {
 		// barber without services
 		Barber b3 = new Barber("Vanderson");
 		// barberRepository.saveAll(Arrays.asList(b1, b2));
-		List<WeekDay> days = WDService.findAll();
 		
 		barberService.insert(b1);
 		barberService.insert(b2);
 		barberService.insert(b3);
 		
 		System.out.println(b1.getId() +" "+ b2.getId() +" "+ b3.getId());
-		for(int i = 0; i < 7; i++) {
-			barberDayRepository.save(new BarberDay( b1, days.get(i), Availability.trabalhando));
-		}
+		
 		b1.getNotes().add(new Note("segunda feira arrumar estoque", LocalDate.now()));
 		barberRepository.save(b1);
 		
@@ -121,11 +113,11 @@ public class TestConfig implements CommandLineRunner {
 
 		o1.getJobs().addAll(Arrays.asList(hJ1, hJ3));
 		o2.getJobs().addAll(Arrays.asList(hJ2, hJ3, hJ4));
-
+		
 		// hJORepository.saveAll(Arrays.asList(o1, o2));
 		hJOService.insert(o1);
 		hJOService.insert(o2);
-
+		
 		/*
 		 * System.out.println(barberService.findById(b1.getId()));
 		 * System.out.println(clientService.findById(c1.getId()));
@@ -158,24 +150,18 @@ public class TestConfig implements CommandLineRunner {
 		 * System.out.println(HairJobOrderMapper.INSTANCE.hairJobOrderDTOToHairJobOrder(
 		 * hjo));
 		 */
-
+		
 		// this will update c2 and give to it a new updated history component.
 		Client uc2 = c2;
 		uc2.setPhone("+34 111 11 11 11");
 		clientService.update(c2.getId(), uc2);
-
+		
 		// this will update b2 and give to it a new updated history component.
 		Barber ub2 = b2;
 		ub2.setName("wanderson");
 		barberService.update(b2.getId(), ub2);
-
+		System.out.println(barberRepository.findById(b1.getId()).get().getOrders());
 		// this one will be only disabled, because they have references by some orders.
-		clientService.delete(c2.getId());
-		barberService.delete(b2.getId());
-
-		// this had to be completed removed from the database.
-		clientService.delete(c3.getId());
-		barberService.delete(b3.getId());
 		
 	}
 

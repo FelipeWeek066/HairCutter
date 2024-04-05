@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.Felipe.HairCutter.entities.Category;
 import com.Felipe.HairCutter.repositories.CategoryRepository;
 import com.Felipe.HairCutter.services.exceptions.DatabaseException;
-import com.Felipe.HairCutter.services.exceptions.ResourceNotFoundException;
+import com.Felipe.HairCutter.services.exceptions.ContentNotFoundException;
 
 import jakarta.validation.Valid;
 
@@ -23,7 +23,7 @@ public class CategoryService {
 	}
 	
 	public Category findById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new ContentNotFoundException(id));
 	}
 	
 	public Category insert(@Valid Category category) {

@@ -12,7 +12,7 @@ public interface ClientMapper {
 	ClientMapper INSTANCE = Mappers.getMapper(ClientMapper.class);
 	
 	@Mapping(target = "orders", ignore = true)
-	@Mapping(target = "history", ignore = true)
+	@Mapping(target = "notes", ignore = true)
 	Client clientDTOToClient(ClientDTO client);
 	
 	ClientDTO clientToClientDTO(Client client);

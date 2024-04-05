@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,6 +31,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@SQLDelete(sql = "UPDATE barber SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 //Entity of the employee
 public class Barber implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -42,27 +47,17 @@ public class Barber implements Serializable{
 	@ToString.Exclude
 	@Setter(value = AccessLevel.NONE)
 	@EqualsAndHashCode.Exclude
-	@OneToMany(mappedBy = "barber", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "barber", fetch = FetchType.EAGER)
 	//if we use List here, a circular Error appear, this doesn't happen with Set or with a @JsonIgnore.
 	private Set<HairJobOrder> orders = new HashSet<>();
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
-	@EqualsAndHashCode.Exclude
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinTable(name = "Barber&History", 
-			joinColumns = {@JoinColumn(name = "barber_id")},
-			inverseJoinColumns = {@JoinColumn(name = "history_id")}
-			)
-	private Set<History> history = new HashSet<>();
-	
-	@Setter(value = AccessLevel.NONE)
-	@ToString.Exclude
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "barber&notes", 
+	@JoinTable(name = "barber_notes", 
 		joinColumns = {@JoinColumn(name = "barber_id")},
 		inverseJoinColumns = {@JoinColumn(name = "note_id")}
 	)
 	private Set<Note> notes = new HashSet<>();
 	
-	
+	private boolean deleted;
 }

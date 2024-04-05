@@ -1,11 +1,11 @@
 package com.Felipe.HairCutter.services.exceptions;
 
 
-public class ResourceNotFoundException extends RuntimeException{
+public class ContentNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ResourceNotFoundException(Object id) {
+	public ContentNotFoundException(Object id) {
 		super("Resource not found. Id: " + id);
 	}
 }

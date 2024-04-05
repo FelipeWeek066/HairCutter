@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.Felipe.HairCutter.entities.HairJobOrder;
 import com.Felipe.HairCutter.repositories.HairJobOrderRepository;
-import com.Felipe.HairCutter.services.exceptions.ResourceNotFoundException;
+import com.Felipe.HairCutter.services.exceptions.ContentNotFoundException;
 
 import jakarta.validation.Valid;
 
@@ -21,7 +21,7 @@ public class HairJobOrderService {
 	}
 	
 	public HairJobOrder findById(Long id) {
-		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+		return repository.findById(id).orElseThrow(() -> new ContentNotFoundException(id));
 	}
 	
 	public HairJobOrder insert(@Valid HairJobOrder hJO) {

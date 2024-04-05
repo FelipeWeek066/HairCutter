@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,37 +31,36 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@SQLDelete(sql = "UPDATE client SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
 public class Client implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
+	
 	@NonNull
 	@NotNull
 	@Pattern(regexp = "^[a-zA-ZÀ-ÿ\\s]*$", message = "apenas letras e espaços")
 	private String name;
+	
 	@NonNull
 	@Pattern(regexp = "^[0-9()+\\s]*$", message = "formato invalido")
 	private String phone;
+	
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	private Set<HairJobOrder> orders = new HashSet<>();
-	@Setter(value = AccessLevel.NONE)
-	@ToString.Exclude
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@JoinTable(name = "Client&History", 
-			joinColumns = {@JoinColumn(name = "client_id")},
-			inverseJoinColumns = {@JoinColumn(name = "history_id")}
-			)
-	private Set<History> history = new HashSet<>();
+	
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "client&notes", 
+	@JoinTable(name = "client_notes", 
 		joinColumns = {@JoinColumn(name = "client_id")},
 		inverseJoinColumns = {@JoinColumn(name = "note_id")}
 	)
 	private Set<Note> notes = new HashSet<>();
+	private boolean deleted;
 }
