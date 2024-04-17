@@ -52,7 +52,7 @@ public class Client implements Serializable{
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-	private Set<HairJobOrder> orders = new HashSet<>();
+	private Set<Order> orders = new HashSet<>();
 	
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude

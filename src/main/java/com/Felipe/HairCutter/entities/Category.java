@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLDelete;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -21,12 +24,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
-
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@SQLDelete(sql = "UPDATE category SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class Category implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -41,6 +44,6 @@ public class Category implements Serializable{
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	@ToString.Exclude
 	private Set<HairJob> hairJobs = new HashSet<>();
-	
+	private boolean deleted;
 
 }

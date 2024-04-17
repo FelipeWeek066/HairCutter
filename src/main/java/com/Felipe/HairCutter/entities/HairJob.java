@@ -2,6 +2,9 @@ package com.Felipe.HairCutter.entities;
 
 import java.io.Serializable;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@SQLDelete(sql = "UPDATE hairJob SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 public class HairJob implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -41,4 +46,5 @@ public class HairJob implements Serializable{
 	@NonNull
 	@NotNull
 	private Double price;
+	private boolean deleted;
 }

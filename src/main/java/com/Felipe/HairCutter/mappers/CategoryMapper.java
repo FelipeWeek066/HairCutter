@@ -12,6 +12,7 @@ public interface CategoryMapper {
 	CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 	
 	@Mapping(target = "hairJobs", ignore = true)
+	@Mapping(target = "deleted", ignore = true)
 	Category categoryDTOToCategory(CategoryDTO client);
 	
 	CategoryDTO categoryToCategoryDTO(Category client);

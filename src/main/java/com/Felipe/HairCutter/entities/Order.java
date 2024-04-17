@@ -5,6 +5,9 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
@@ -32,8 +35,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "orders")
-public class HairJobOrder implements Serializable{
+@SQLDelete(sql = "UPDATE jobOrder SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
+@Table(name = "jobOrder") 
+public class Order implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,21 +60,22 @@ public class HairJobOrder implements Serializable{
 	private Instant instant;
 	@Setter(value = AccessLevel.NONE)
 	@ManyToMany
-	@JoinTable(name = "Order&Jobs", 
+	@JoinTable(name = "order_jobs", 
 	joinColumns = {@JoinColumn(name = "hairJob_id")},
-	inverseJoinColumns = {@JoinColumn(name = "orders_id")}
+	inverseJoinColumns = {@JoinColumn(name = "jobOrder_id")}
 	)
 	@ToString.Exclude
 	private Set<HairJob> jobs = new HashSet<>();
 	@Setter(value = AccessLevel.NONE)
 	@ToString.Exclude
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinTable(name = "order&notes", 
-			joinColumns = {@JoinColumn(name = "order_id")},
+	@JoinTable(name = "order_notes", 
+			joinColumns = {@JoinColumn(name = "jobOrder_id")},
 			inverseJoinColumns = {@JoinColumn(name = "note_id")}
 		)
 	private Set<Note> notes = new HashSet<>();
 	
+	private boolean deleted;
 	
 	public Double fullPrice() {
 		return jobs.stream()

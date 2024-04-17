@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HairJobOrderDTO implements Serializable{
+public class OrderDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String id;

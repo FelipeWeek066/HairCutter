@@ -5,26 +5,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Felipe.HairCutter.entities.HairJobOrder;
-import com.Felipe.HairCutter.repositories.HairJobOrderRepository;
+import com.Felipe.HairCutter.entities.Order;
+import com.Felipe.HairCutter.repositories.OrderRepository;
 import com.Felipe.HairCutter.services.exceptions.ContentNotFoundException;
 
 import jakarta.validation.Valid;
 
 @Service
-public class HairJobOrderService {
+public class OrderService {
 	@Autowired
-	private HairJobOrderRepository repository;
+	private OrderRepository repository;
 	
-	public List<HairJobOrder> findAll(){
+	public List<Order> findAll(){
 		return repository.findAll();
 	}
 	
-	public HairJobOrder findById(Long id) {
+	public Order findById(Long id) {
 		return repository.findById(id).orElseThrow(() -> new ContentNotFoundException(id));
 	}
 	
-	public HairJobOrder insert(@Valid HairJobOrder hJO) {
+	public Order insert(@Valid Order hJO) {
 		return repository.save(hJO);
 	}
 	
@@ -33,13 +33,13 @@ public class HairJobOrderService {
 		repository.deleteById(id);
 	}
 	
-	public HairJobOrder update(Long id, @Valid HairJobOrder obj) {
-		HairJobOrder hJO = findById(id);
+	public Order update(Long id, @Valid Order obj) {
+		Order hJO = findById(id);
 		updateData(hJO, obj);
 		return repository.save(hJO);
 	}
 
-	private void updateData(HairJobOrder hJO, HairJobOrder obj) {
+	private void updateData(Order hJO, Order obj) {
 		hJO.setClient(obj.getClient());
 		hJO.setBarber(obj.getBarber());
 		hJO.setInstant(obj.getInstant());

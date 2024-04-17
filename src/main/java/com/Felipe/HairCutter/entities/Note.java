@@ -3,6 +3,9 @@ package com.Felipe.HairCutter.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
+@SQLDelete(sql = "UPDATE note SET deleted = true WHERE id=?")
+@Where(clause = "deleted=false")
 //note entity, you can note a client, a barber, or day of the week.
 public class Note implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -27,4 +32,5 @@ public class Note implements Serializable{
 	private String note;
 	@NonNull
 	private LocalDate date;
+	private boolean deleted;
 }

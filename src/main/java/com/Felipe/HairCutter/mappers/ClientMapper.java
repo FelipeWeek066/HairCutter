@@ -13,6 +13,7 @@ public interface ClientMapper {
 	
 	@Mapping(target = "orders", ignore = true)
 	@Mapping(target = "notes", ignore = true)
+	@Mapping(target = "deleted", ignore = true)
 	Client clientDTOToClient(ClientDTO client);
 	
 	ClientDTO clientToClientDTO(Client client);
